@@ -57,46 +57,39 @@ with col2:
     se visualizan de forma interactiva utilizando gráficos de barras.
     """)
 
+import streamlit as st
+
+st.title("Ejemplo de Scrollytelling")
+
 st.markdown("""
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/2.2.1/scrollama.min.js"></script>
-<div id="scroll">
-    <p>Texto inicial que cambiará al hacer scroll.</p>
+<div id="scroll-container" style="height: 800px; overflow-y: scroll; border: 1px solid black;">
+    <div id="step1" style="margin-top: 300px;">
+        <p>Texto inicial</p>
+    </div>
+    <div id="step2" style="margin-top: 300px;">
+        <p>Texto después del scroll</p>
+    </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/2.2.1/scrollama.min.js"></script>
 <script>
 var scroller = scrollama();
+
 scroller
-  .setup({
-    step: '#scroll',
-  })
-  .onStepEnter(function(response) {
-    document.getElementById('scroll').innerHTML = '<p>Nuevo contenido después del scroll</p>';
-  });
+    .setup({
+        step: '#scroll-container div', // los "steps" son los divs dentro del contenedor
+    })
+    .onStepEnter(function(response) {
+        // Cambiar el contenido del div al hacer scroll
+        if (response.index === 0) {
+            document.getElementById('step1').innerHTML = '<p>Scroll iniciado</p>';
+        } else if (response.index === 1) {
+            document.getElementById('step2').innerHTML = '<p>Scroll completado</p>';
+        }
+    });
 </script>
 """, unsafe_allow_html=True)
 
-# Dividir la página en dos columnas
-col1, col2 = st.columns(2)
-
-# Datos de ejemplo y gráfico en la primera columna
-data = {
-    "Productos": ["Papa", "Tomate", "Zanahoria", "Lechuga"],
-    "Precios": [1.50, 2.30, 1.80, 0.80]
-}
-df = pd.DataFrame(data)
-
-with col1:
-    st.subheader("Evolución de Precios")
-    fig = px.bar(df, x="Productos", y="Precios", title="Precios de Productos")
-    st.plotly_chart(fig, use_container_width=True)
-
-# Texto y otro contenido en la segunda columna
-with col2:
-    st.markdown('<p class="custom-header">Análisis del precio de productos</p>', unsafe_allow_html=True)
-    st.write("""
-    En esta sección, mostramos la evolución de los precios de algunos productos clave 
-    a lo largo del tiempo. Los datos se obtuvieron de informes semanales y 
-    se visualizan de forma interactiva utilizando gráficos de barras.
-    """)
 
 
 # Footer o información adicional
