@@ -19,11 +19,15 @@ col1, col2 = st.columns([1, 1])
 
 # Columna 1: Gráfico que permanece fijo mientras haces scroll en la columna 2
 with col1:
+    st.markdown("""
+    <div class="fixed-content">
+    """, unsafe_allow_html=True)
     st.plotly_chart(fig, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Columna 2: Contenido que se desplaza al hacer scroll
 with col2:
-    # CSS para mantener el gráfico en la columna 1 fijo
+    # CSS para hacer que el gráfico permanezca fijo y habilitar el scroll
     st.markdown("""
     <style>
     .fixed-content {
@@ -32,8 +36,12 @@ with col2:
         top: 0;
     }
     .scroll-container {
-        height: 100vh;
+        height: 200vh;  /* Altura extendida para hacer scroll */
         overflow-y: scroll;
+        padding: 10px;
+    }
+    h2 {
+        color: #FF6347; /* Color de los encabezados */
     }
     </style>
     """, unsafe_allow_html=True)
@@ -51,7 +59,6 @@ with col2:
         <p>Finalmente, puedes cerrar tu historia en esta sección y dejar que el usuario continúe navegando por el contenido de la página. Esta es una estrategia muy útil para historias con varios puntos de datos.</p>
     </div>
     """, unsafe_allow_html=True)
-
 
 # Footer o información adicional
 st.markdown("---")
