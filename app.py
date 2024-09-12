@@ -74,6 +74,31 @@ scroller
 </script>
 """, unsafe_allow_html=True)
 
+# Dividir la página en dos columnas
+col1, col2 = st.columns(2)
+
+# Datos de ejemplo y gráfico en la primera columna
+data = {
+    "Productos": ["Papa", "Tomate", "Zanahoria", "Lechuga"],
+    "Precios": [1.50, 2.30, 1.80, 0.80]
+}
+df = pd.DataFrame(data)
+
+with col1:
+    st.subheader("Evolución de Precios")
+    fig = px.bar(df, x="Productos", y="Precios", title="Precios de Productos")
+    st.plotly_chart(fig, use_container_width=True)
+
+# Texto y otro contenido en la segunda columna
+with col2:
+    st.markdown('<p class="custom-header">Análisis del precio de productos</p>', unsafe_allow_html=True)
+    st.write("""
+    En esta sección, mostramos la evolución de los precios de algunos productos clave 
+    a lo largo del tiempo. Los datos se obtuvieron de informes semanales y 
+    se visualizan de forma interactiva utilizando gráficos de barras.
+    """)
+
+
 # Footer o información adicional
 st.markdown("---")
 st.write("Creado por ABCData. Todos los derechos reservados.")
