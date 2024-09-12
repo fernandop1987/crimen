@@ -14,43 +14,36 @@ fig = px.line(data, x='x', y='y', title="Gráfico Fijo")
 # Configuración del layout de la página
 st.set_page_config(layout="wide")
 
-# CSS para hacer que la columna del gráfico sea fija
-st.markdown("""
-    <style>
-    .fixed-content {
-        position: sticky;
-        top: 0;
-    }
-    .scroll-container {
-        height: 100vh;
-        overflow-y: scroll;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
 # Creamos una fila con dos columnas
 col1, col2 = st.columns([1, 2])
 
 # Columna 1: Gráfico que permanece fijo
 with col1:
+    st.markdown("""
+    <style>
+    .fixed-content {
+        position: sticky;
+        top: 0;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Contenedor fijo para el gráfico
     st.markdown('<div class="fixed-content">', unsafe_allow_html=True)
     st.plotly_chart(fig, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Columna 2: Contenido desplazable
 with col2:
-    st.markdown("""
-    <div class="scroll-container">
-        <h2>Sección 1</h2>
-        <p>Este texto se desplaza mientras el gráfico permanece fijo. Puedes seguir haciendo scroll para ver más contenido. Aquí puedes poner historias de datos o explicaciones adicionales.</p>
+    # Contenido de la historia con texto desplazable usando las funciones nativas de Streamlit
+    st.header("Sección 1")
+    st.write("Este texto se desplaza mientras el gráfico permanece fijo. Puedes seguir haciendo scroll para ver más contenido. Aquí puedes poner historias de datos o explicaciones adicionales.")
 
-        <h2>Sección 2</h2>
-        <p>Cuando llegues a esta sección, puedes continuar describiendo tus datos o agregar más visualizaciones. La columna de la derecha puede seguir mostrando gráficos fijos o información relevante.</p>
+    st.header("Sección 2")
+    st.write("Cuando llegues a esta sección, puedes continuar describiendo tus datos o agregar más visualizaciones. La columna de la derecha puede seguir mostrando gráficos fijos o información relevante.")
 
-        <h2>Sección 3</h2>
-        <p>Finalmente, puedes cerrar tu historia en esta sección y dejar que el usuario continúe navegando por el contenido de la página. Esta es una estrategia muy útil para historias con varios puntos de datos.</p>
+    st.header("Sección 3")
+    st.write("Finalmente, puedes cerrar tu historia en esta sección y dejar que el usuario continúe navegando por el contenido de la página. Esta es una estrategia muy útil para historias con varios puntos de datos.")
 
-        <h2>Sección 4</h2>
-        <p>Añade más secciones según sea necesario. El contenido seguirá desplazándose mientras el gráfico permanece fijo a la izquierda.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.header("Sección 4")
+    st.write("Añade más secciones según sea necesario. El contenido seguirá desplazándose mientras el gráfico permanece fijo a la izquierda.")
