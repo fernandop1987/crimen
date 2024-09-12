@@ -92,10 +92,5 @@ st.markdown("""
     </script>
     """, unsafe_allow_html=True)
 
-# Convertir el gráfico de Plotly a HTML y colocar en la columna correcta
-plotly_html = fig.to_html(full_html=False, include_plotlyjs="cdn")
-st.markdown(f"""
-    <script>
-    document.getElementById("scrolly-graphic").innerHTML = `{plotly_html}`;
-    </script>
-    """, unsafe_allow_html=True)
+# Insertar el gráfico Plotly en el div correcto
+st.components.v1.html(fig.to_html(full_html=False, include_plotlyjs="cdn"), height=600)
