@@ -14,39 +14,31 @@ fig = px.line(data, x='x', y='y', title="Gráfico Fijo")
 # Configuración del layout de la página
 st.set_page_config(layout="wide")
 
-# Creamos una fila con dos columnas
-col1, col2 = st.columns([1, 1])
-
-# Columna 1: Gráfico que permanece fijo mientras haces scroll en la columna 2
-with col1:
-    st.markdown("""
-    <div class="fixed-content">
-    """, unsafe_allow_html=True)
-    st.plotly_chart(fig, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# Columna 2: Contenido que se desplaza al hacer scroll
-with col2:
-    # CSS para hacer que el gráfico permanezca fijo y habilitar el scroll
-    st.markdown("""
+# CSS para hacer que la columna del gráfico sea fija
+st.markdown("""
     <style>
     .fixed-content {
-        position: -webkit-sticky; /* Safari */
         position: sticky;
         top: 0;
     }
     .scroll-container {
-        height: 200vh;  /* Altura extendida para hacer scroll */
+        height: 100vh;
         overflow-y: scroll;
-        padding: 10px;
-    }
-    h2 {
-        color: #FF6347; /* Color de los encabezados */
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # Texto que se mueve con el scroll
+# Creamos una fila con dos columnas
+col1, col2 = st.columns([1, 2])
+
+# Columna 1: Gráfico que permanece fijo
+with col1:
+    st.markdown('<div class="fixed-content">', unsafe_allow_html=True)
+    st.plotly_chart(fig, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Columna 2: Contenido desplazable
+with col2:
     st.markdown("""
     <div class="scroll-container">
         <h2>Sección 1</h2>
@@ -57,9 +49,8 @@ with col2:
 
         <h2>Sección 3</h2>
         <p>Finalmente, puedes cerrar tu historia en esta sección y dejar que el usuario continúe navegando por el contenido de la página. Esta es una estrategia muy útil para historias con varios puntos de datos.</p>
+
+        <h2>Sección 4</h2>
+        <p>Añade más secciones según sea necesario. El contenido seguirá desplazándose mientras el gráfico permanece fijo a la izquierda.</p>
     </div>
     """, unsafe_allow_html=True)
-
-# Footer o información adicional
-st.markdown("---")
-st.write("Creado por ABCData. Todos los derechos reservados.")
