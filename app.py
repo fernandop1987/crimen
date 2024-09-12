@@ -20,8 +20,7 @@ st.markdown("""
     .fixed-content {
         position: sticky;
         top: 0;
-        z-index: 1;
-        background: white;
+        height: 100vh;
     }
     </style>
     """, unsafe_allow_html=True)
