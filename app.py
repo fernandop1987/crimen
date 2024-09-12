@@ -29,7 +29,7 @@ st.markdown("""
 st.markdown('<p class="big-title">Historias de Datos Interactivas</p>', unsafe_allow_html=True)
 
 # Incluir una imagen de fondo
-st.image("background_image.png", use_column_width=True)
+st.image("background_image.jfif", use_column_width=True)
 
 # Dividir la página en dos columnas
 col1, col2 = st.columns(2)
