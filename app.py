@@ -14,46 +14,85 @@ fig = px.line(data, x='x', y='y', title="Gráfico Fijo")
 # Configuración de la página en Streamlit
 st.set_page_config(layout="wide")
 
-# CSS para fijar el gráfico en la columna derecha
+# Insertamos el CSS y JavaScript necesarios para ScrollyTeller
 st.markdown("""
+    <script src="https://cdn.jsdelivr.net/gh/ihmeuw/ScrollyTeller@0.0.2/src/scrollyteller.js"></script>
     <style>
-    .fixed-content {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        height: 100vh;
+    .scrolly-container {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        justify-content: space-between;
     }
-    .scrollable-text {
+    .scrolly-text {
+        width: 50%;
         height: 100vh;
         overflow-y: scroll;
     }
+    .scrolly-graphic {
+        width: 40%;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+    .step {
+        margin-bottom: 100vh;
+    }
     </style>
+    
+    <div class="scrolly-container">
+        <div class="scrolly-text" id="scrolly-text">
+            <div class="step">
+                <h2>Sección 1</h2>
+                <p>Este es el primer bloque de texto. Al hacer scroll, el gráfico permanece fijo.</p>
+            </div>
+            <div class="step">
+                <h2>Sección 2</h2>
+                <p>Más texto mientras sigues desplazándote. El gráfico sigue fijo en la columna derecha.</p>
+            </div>
+            <div class="step">
+                <h2>Sección 3</h2>
+                <p>Última sección, donde puedes agregar más detalles sobre los datos o la visualización.</p>
+            </div>
+        </div>
+        <div class="scrolly-graphic" id="scrolly-graphic">
+            <!-- Aquí cargaremos el gráfico de Plotly -->
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const scrolly = new ScrollyTeller({
+            parent: document.querySelector("#scrolly-text"),
+            triggerTop: 1/3, // La posición en la que se activará cada paso
+            triggerTopMobile: 0.75, // Ajustes para móviles
+            transparentUntilActive: true
+        });
+
+        scrolly.addTrigger({
+            num: 1,
+            do: () => {
+                // Aquí puedes cambiar el gráfico o mostrar algo cuando llegues al paso 1
+                document.querySelector("#scrolly-graphic").innerHTML = "Gráfico en Sección 1";
+            }
+        });
+
+        scrolly.addTrigger({
+            num: 2,
+            do: () => {
+                // Cambio cuando llegas al paso 2
+                document.querySelector("#scrolly-graphic").innerHTML = "Gráfico en Sección 2";
+            }
+        });
+
+        scrolly.addTrigger({
+            num: 3,
+            do: () => {
+                // Cambio cuando llegas al paso 3
+                document.querySelector("#scrolly-graphic").innerHTML = "Gráfico en Sección 3";
+            }
+        });
+    });
+    </script>
     """, unsafe_allow_html=True)
 
-# Crear las dos columnas
-col1, col2 = st.columns([1, 2])
-
-# Columna 1: Texto desplazable
-with col1:
-    st.markdown('<div class="scrollable-text">', unsafe_allow_html=True)
-    st.header("Sección 1")
-    st.write("Este texto se desplaza mientras el gráfico permanece fijo. Aquí puedes poner historias de datos o explicaciones adicionales.")
-    st.write("Texto adicional para hacer la sección más larga y asegurar que se puede hacer scroll. " * 20)
-
-    st.header("Sección 2")
-    st.write("Continúa con más información y el gráfico sigue siendo fijo en la otra columna.")
-    st.write("Texto adicional para hacer la sección más larga y asegurar que se puede hacer scroll. " * 20)
-
-    st.header("Sección 3")
-    st.write("Finalmente, esta es la sección final.")
-    st.write("Texto adicional para hacer la sección más larga y asegurar que se puede hacer scroll. " * 20)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# Columna 2: Gráfico fijo
-with col2:
-    st.markdown('<div class="fixed-content">', unsafe_allow_html=True)
-    st.plotly_chart(fig, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+# Insertamos el gráfico Plotly en la posición correcta
+st.plotly_chart(fig, use_container_width=True)
