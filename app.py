@@ -54,7 +54,7 @@ st.markdown("""
             </div>
         </div>
         <div class="scrolly-graphic" id="scrolly-graphic">
-            <!-- Aquí cargaremos el gráfico de Plotly -->
+            <!-- Aquí se colocará el gráfico de Plotly -->
         </div>
     </div>
 
@@ -70,29 +70,34 @@ st.markdown("""
         scrolly.addTrigger({
             num: 1,
             do: () => {
-                // Aquí puedes cambiar el gráfico o mostrar algo cuando llegues al paso 1
-                document.querySelector("#scrolly-graphic").innerHTML = "Gráfico en Sección 1";
+                // Puedes cambiar el contenido del gráfico cuando llegues al paso 1
+                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico para Sección 1</h3>";
             }
         });
 
         scrolly.addTrigger({
             num: 2,
             do: () => {
-                // Cambio cuando llegas al paso 2
-                document.querySelector("#scrolly-graphic").innerHTML = "Gráfico en Sección 2";
+                // Cambia el gráfico cuando llegues al paso 2
+                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico para Sección 2</h3>";
             }
         });
 
         scrolly.addTrigger({
             num: 3,
             do: () => {
-                // Cambio cuando llegas al paso 3
-                document.querySelector("#scrolly-graphic").innerHTML = "Gráfico en Sección 3";
+                // Cambia el gráfico cuando llegues al paso 3
+                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico para Sección 3</h3>";
             }
         });
     });
     </script>
     """, unsafe_allow_html=True)
 
-# Insertamos el gráfico Plotly en la posición correcta
-st.plotly_chart(fig, use_container_width=True)
+# Insertamos el gráfico Plotly en el div correcto
+plotly_html = fig.to_html(full_html=False, include_plotlyjs="cdn")
+st.markdown(f"""
+    <script>
+    document.getElementById("scrolly-graphic").innerHTML = `{plotly_html}`;
+    </script>
+    """, unsafe_allow_html=True)
