@@ -2,66 +2,55 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
-# Configuración de la página completa y título
-st.set_page_config(layout="wide", page_title="Mi Historia de Datos")
+# Simulamos algunos datos para el gráfico
+data = pd.DataFrame({
+    'x': range(10),
+    'y': [i**2 for i in range(10)]
+})
 
-# Agregar CSS personalizado para el estilo
-st.markdown("""
+# Creamos un gráfico básico con Plotly
+fig = px.line(data, x='x', y='y', title="Gráfico Fijo")
+
+# Configuración del layout de la página
+st.set_page_config(layout="wide")
+
+# Creamos una fila con dos columnas
+col1, col2 = st.columns([1, 1])
+
+# Columna 1: Gráfico que permanece fijo mientras haces scroll en la columna 2
+with col1:
+    st.plotly_chart(fig, use_container_width=True)
+
+# Columna 2: Contenido que se desplaza al hacer scroll
+with col2:
+    # CSS para mantener el gráfico en la columna 1 fijo
+    st.markdown("""
     <style>
-    .main {
-        background-color: #f5f5f5;
+    .fixed-content {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 0;
     }
-    .big-title {
-        font-size:40px !important;
-        font-family: 'Helvetica', sans-serif;
-        color: #333333;
-    }
-    .custom-header {
-        font-size: 25px;
-        color: #FF6347;
-        text-align: center;
-        margin-bottom: 20px;
+    .scroll-container {
+        height: 100vh;
+        overflow-y: scroll;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# Título grande y centrado
-st.markdown('<p class="big-title">Historias de Datos Interactivas</p>', unsafe_allow_html=True)
+    # Texto que se mueve con el scroll
+    st.markdown("""
+    <div class="scroll-container">
+        <h2>Sección 1</h2>
+        <p>Este texto se desplaza mientras el gráfico permanece fijo. Puedes seguir haciendo scroll para ver más contenido. Aquí puedes poner historias de datos o explicaciones adicionales.</p>
 
-# Incluir una imagen de fondo
-st.image("background_image.jpg", use_column_width=True)
+        <h2>Sección 2</h2>
+        <p>Cuando llegues a esta sección, puedes continuar describiendo tus datos o agregar más visualizaciones. La columna de la derecha puede seguir mostrando gráficos fijos o información relevante.</p>
 
-
-
-# Dividir la página en dos columnas
-col1, col2 = st.columns(2)
-
-# Datos de ejemplo y gráfico en la primera columna
-data = {
-    "Productos": ["Papa", "Tomate", "Zanahoria", "Lechuga"],
-    "Precios": [1.50, 2.30, 1.80, 0.80]
-}
-df = pd.DataFrame(data)
-
-with col1:
-    st.subheader("Evolución de Precios")
-    fig = px.bar(df, x="Productos", y="Precios", title="Precios de Productos")
-    st.plotly_chart(fig, use_container_width=True)
-
-# Texto y otro contenido en la segunda columna
-with col2:
-    st.markdown('<p class="custom-header">Análisis del precio de productos</p>', unsafe_allow_html=True)
-    st.write("""
-    En esta sección, mostramos la evolución de los precios de algunos productos clave 
-    a lo largo del tiempo. Los datos se obtuvieron de informes semanales y 
-    se visualizan de forma interactiva utilizando gráficos de barras.
-    """)
-
-import streamlit as st
-
-st.title("Ejemplo de Scrollytelling")
-
-
+        <h2>Sección 3</h2>
+        <p>Finalmente, puedes cerrar tu historia en esta sección y dejar que el usuario continúe navegando por el contenido de la página. Esta es una estrategia muy útil para historias con varios puntos de datos.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # Footer o información adicional
