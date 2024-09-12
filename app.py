@@ -21,6 +21,7 @@ st.markdown("""
     .scrolly-container {
         display: flex;
         justify-content: space-between;
+        position: relative;
     }
     .scrolly-text {
         width: 50%;
@@ -54,7 +55,7 @@ st.markdown("""
             </div>
         </div>
         <div class="scrolly-graphic" id="scrolly-graphic">
-            <!-- Aquí se colocará el gráfico de Plotly -->
+            <!-- El gráfico de Plotly se colocará aquí -->
         </div>
     </div>
 
@@ -62,39 +63,36 @@ st.markdown("""
     document.addEventListener("DOMContentLoaded", function() {
         const scrolly = new ScrollyTeller({
             parent: document.querySelector("#scrolly-text"),
-            triggerTop: 1/3, // La posición en la que se activará cada paso
-            triggerTopMobile: 0.75, // Ajustes para móviles
+            triggerTop: 1/3,
+            triggerTopMobile: 0.75,
             transparentUntilActive: true
         });
 
         scrolly.addTrigger({
             num: 1,
             do: () => {
-                // Puedes cambiar el contenido del gráfico cuando llegues al paso 1
-                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico para Sección 1</h3>";
+                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico Sección 1</h3>";
             }
         });
 
         scrolly.addTrigger({
             num: 2,
             do: () => {
-                // Cambia el gráfico cuando llegues al paso 2
-                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico para Sección 2</h3>";
+                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico Sección 2</h3>";
             }
         });
 
         scrolly.addTrigger({
             num: 3,
             do: () => {
-                // Cambia el gráfico cuando llegues al paso 3
-                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico para Sección 3</h3>";
+                document.querySelector("#scrolly-graphic").innerHTML = "<h3>Gráfico Sección 3</h3>";
             }
         });
     });
     </script>
     """, unsafe_allow_html=True)
 
-# Insertamos el gráfico Plotly en el div correcto
+# Convertir el gráfico de Plotly a HTML y colocar en la columna correcta
 plotly_html = fig.to_html(full_html=False, include_plotlyjs="cdn")
 st.markdown(f"""
     <script>
