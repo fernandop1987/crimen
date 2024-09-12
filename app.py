@@ -61,34 +61,6 @@ import streamlit as st
 
 st.title("Ejemplo de Scrollytelling")
 
-st.markdown("""
-<div id="scroll-container" style="height: 800px; overflow-y: scroll; border: 1px solid black;">
-    <div id="step1" style="margin-top: 300px;">
-        <p>Texto inicial</p>
-    </div>
-    <div id="step2" style="margin-top: 300px;">
-        <p>Texto después del scroll</p>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/2.2.1/scrollama.min.js"></script>
-<script>
-var scroller = scrollama();
-
-scroller
-    .setup({
-        step: '#scroll-container div', // los "steps" son los divs dentro del contenedor
-    })
-    .onStepEnter(function(response) {
-        // Cambiar el contenido del div al hacer scroll
-        if (response.index === 0) {
-            document.getElementById('step1').innerHTML = '<p>Scroll iniciado</p>';
-        } else if (response.index === 1) {
-            document.getElementById('step2').innerHTML = '<p>Scroll completado</p>';
-        }
-    });
-</script>
-""", unsafe_allow_html=True)
 
 
 
