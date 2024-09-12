@@ -31,22 +31,6 @@ st.markdown('<p class="big-title">Historias de Datos Interactivas</p>', unsafe_a
 # Incluir una imagen de fondo
 st.image("background_image.jpg", use_column_width=True)
 
-st.markdown("""
-<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/2.2.1/scrollama.min.js"></script>
-<div id="scroll">
-    <p>Texto inicial que cambiará al hacer scroll.</p>
-</div>
-<script>
-var scroller = scrollama();
-scroller
-  .setup({
-    step: '#scroll',
-  })
-  .onStepEnter(function(response) {
-    document.getElementById('scroll').innerHTML = '<p>Nuevo contenido después del scroll</p>';
-  });
-</script>
-""", unsafe_allow_html=True)
 
 
 # Dividir la página en dos columnas
@@ -72,6 +56,23 @@ with col2:
     a lo largo del tiempo. Los datos se obtuvieron de informes semanales y 
     se visualizan de forma interactiva utilizando gráficos de barras.
     """)
+
+st.markdown("""
+<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/2.2.1/scrollama.min.js"></script>
+<div id="scroll">
+    <p>Texto inicial que cambiará al hacer scroll.</p>
+</div>
+<script>
+var scroller = scrollama();
+scroller
+  .setup({
+    step: '#scroll',
+  })
+  .onStepEnter(function(response) {
+    document.getElementById('scroll').innerHTML = '<p>Nuevo contenido después del scroll</p>';
+  });
+</script>
+""", unsafe_allow_html=True)
 
 # Footer o información adicional
 st.markdown("---")
